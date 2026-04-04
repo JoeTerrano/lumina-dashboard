@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumina Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-overlay"></div>
+    <main class="dashboard">
+        <header class="header">
+            <h1 id="greeting">Good Morning</h1>
+            <div id="clock" class="clock">00:00:00</div>
+        </header>
+
+        <div class="widgets-container">
+            <section class="widgets">
+                <div class="glass-panel focus-widget">
+                    <h2>What is your focus today?</h2>
+                    <div id="focus-input-container">
+                        <input type="text" id="focus-input" placeholder="Enter your daily goal..." aria-label="Daily Goal">
+                    </div>
+                    <div id="focus-display" class="hidden">
+                        <p id="focus-text"></p>
+                        <button id="complete-btn">Complete</button>
+                    </div>
+                </div>
+
+                <div class="glass-panel weather-widget">
+                    <h3>Weather</h3>
+                    <div class="weather-content">
+                        <span id="temp">22°C</span>
+                        <span id="condition">Partly Cloudy</span>
+                    </div>
+                </div>
+
+                <div class="glass-panel quote-widget">
+                    <p id="quote">"Creativity is intelligence having fun."</p>
+                    <cite>— Albert Einstein</cite>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

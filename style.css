@@ -1,0 +1,207 @@
+:root {
+    --primary-color: #ffffff;
+    --accent-color: #00d2ff;
+    --text-color: #ffffff;
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --font-family: 'Inter', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family);
+    color: var(--text-color);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    background: url('background.png') no-repeat center center/cover;
+}
+
+.background-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(5px);
+    z-index: -1;
+}
+
+.dashboard {
+    width: 90%;
+    max-width: 1200px;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    text-align: center;
+    z-index: 10;
+}
+
+.header {
+    margin-bottom: 2rem;
+}
+
+#greeting {
+    font-size: 3rem;
+    font-weight: 300;
+    text-transform: capitalize;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.clock {
+    font-size: 5rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+.widgets-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.widgets {
+    display: flex;
+    gap: 1.5rem;
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.glass-panel {
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    backdrop-filter: blur(15px);
+    border-radius: 20px;
+    padding: 2rem;
+    flex: 1;
+    min-width: 300px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.glass-panel:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+
+.focus-widget h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+}
+
+#focus-input {
+    width: 100%;
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    font-size: 1.2rem;
+    text-align: center;
+    outline: none;
+    transition: border-color 0.3s ease;
+}
+
+#focus-input:focus {
+    border-color: var(--accent-color);
+}
+
+#focus-display {
+    margin-top: 1rem;
+}
+
+#focus-text {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+#complete-btn {
+    padding: 0.6rem 2rem;
+    border-radius: 30px;
+    border: none;
+    background: var(--accent-color);
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+#complete-btn:hover {
+    opacity: 0.9;
+    transform: scale(1.05);
+}
+
+.weather-widget h3 {
+    font-size: 1.2rem;
+    font-weight: 300;
+    margin-bottom: 1rem;
+}
+
+.weather-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+#temp {
+    font-size: 3.5rem;
+    font-weight: 600;
+}
+
+#condition {
+    font-size: 1.1rem;
+    opacity: 0.8;
+}
+
+.quote-widget {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#quote {
+    font-size: 1.2rem;
+    font-style: italic;
+    margin-bottom: 1rem;
+}
+
+cite {
+    font-size: 0.9rem;
+    opacity: 0.7;
+}
+
+.hidden {
+    display: none;
+}
+
+@media (max-width: 768px) {
+    .clock {
+        font-size: 3.5rem;
+    }
+    #greeting {
+        font-size: 2rem;
+    }
+    .widgets {
+        flex-direction: column;
+    }
+    .glass-panel {
+        width: 100%;
+    }
+}
