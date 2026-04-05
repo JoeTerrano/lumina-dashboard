@@ -218,6 +218,44 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    position: relative;
+}
+
+#quote-content {
+    transition: opacity 0.3s ease;
+}
+
+#quote-content.fade-out {
+    opacity: 0;
+}
+
+.icon-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0.2rem;
+}
+
+.icon-btn:hover {
+    color: var(--accent-color);
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.spinning {
+    animation: spin 1s linear infinite;
+    pointer-events: none;
 }
 
 #quote {

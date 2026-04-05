@@ -213,6 +213,39 @@ document.getElementById('location-input').onblur = (e) => {
     }
 };
 
+// --- Quote Management ---
+async function fetchNewQuote() {
+    const btn = document.getElementById('refresh-quote-btn');
+    const content = document.getElementById('quote-content');
+    const quoteEl = document.getElementById('quote');
+    const authorEl = document.getElementById('quote-author');
+
+    if (btn) btn.classList.add('spinning');
+    if (content) content.classList.add('fade-out');
+
+    try {
+        const response = await fetch('https://dummyjson.com/quotes/random');
+        const data = await response.json();
+        
+        setTimeout(() => {
+            if (quoteEl) quoteEl.textContent = `"${data.quote}"`;
+            if (authorEl) authorEl.textContent = `— ${data.author}`;
+            
+            if (content) content.classList.remove('fade-out');
+            if (btn) btn.classList.remove('spinning');
+        }, 300); // Wait for fade out
+    } catch (error) {
+        console.error("Failed to fetch quote:", error);
+        if (content) content.classList.remove('fade-out');
+        if (btn) btn.classList.remove('spinning');
+    }
+}
+
+const refreshBtn = document.getElementById('refresh-quote-btn');
+if (refreshBtn) {
+    refreshBtn.addEventListener('click', fetchNewQuote);
+}
+
 // Focus Persistence (Existing Logic)
 focusInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter' && focusInput.value.trim() !== "") {
@@ -236,6 +269,7 @@ loadState();
 updateTime();
 renderLinks();
 updateWeather();
+fetchNewQuote();
 setInterval(updateTime, 1000);
 
 const savedFocus = localStorage.getItem('lumina_focus');
