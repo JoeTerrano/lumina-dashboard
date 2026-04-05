@@ -196,6 +196,14 @@ body {
     gap: 0.5rem;
 }
 
+#location-display {
+    font-size: 0.9rem;
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: -0.2rem;
+}
+
 #temp {
     font-size: 3.5rem;
     font-weight: 600;

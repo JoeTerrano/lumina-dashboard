@@ -81,6 +81,8 @@ async function updateWeather() {
 
         document.getElementById('temp').textContent = `${Math.round(temp)}°${state.units.temp}`;
         document.getElementById('condition').textContent = decodeWeatherCode(weather.weathercode);
+        const locationDisplay = document.getElementById('location-display');
+        if (locationDisplay) locationDisplay.textContent = state.location.city;
     } catch (err) {
         console.error("Weather fetch failed:", err);
     }
