@@ -179,29 +179,48 @@ body {
     opacity: 0.8;
 }
 
-.task-item input[type="radio"] {
+.task-item input[type="checkbox"] {
     -webkit-appearance: none;
     appearance: none;
     margin: 0;
     width: 20px;
     height: 20px;
     border: 2px solid var(--text-light);
-    border-radius: 50%;
+    border-radius: 4px;
     outline: none;
     cursor: pointer;
     transition: all 0.2s ease;
     flex-shrink: 0;
+    position: relative;
 }
 
-.task-item input[type="radio"]:checked {
+.task-item input[type="checkbox"]:checked {
     background-color: var(--accent-color);
     border-color: var(--accent-color);
+}
+
+.task-item input[type="checkbox"]:checked::after {
+    content: '';
+    position: absolute;
+    left: 6px;
+    top: 2px;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
 }
 
 .task-label {
     flex: 1;
     word-break: break-word;
-    transition: font-size 0.2s ease;
+    transition: font-size 0.2s ease, color 0.3s ease, text-decoration 0.3s ease;
+}
+
+.task-label.completed {
+    color: rgba(255, 255, 255, 0.4);
+    font-style: italic;
+    text-decoration: line-through;
 }
 
 .weather-widget h3 {

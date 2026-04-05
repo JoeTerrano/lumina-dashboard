@@ -17,6 +17,12 @@ function loadState() {
     if (saved) {
         state = JSON.parse(saved);
         if (!state.tasks) state.tasks = [];
+        
+        // Map string tasks to objects and filter out completed tasks
+        state.tasks = state.tasks
+            .map(t => typeof t === 'string' ? { text: t, completed: false } : t)
+            .filter(t => !t.completed);
+
         // Sync Modal UI
         document.getElementById('location-input').value = state.location.city;
         document.getElementById('temp-unit').value = state.units.temp;
@@ -252,15 +258,15 @@ focusInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter' && focusInput.value.trim() !== "") {
         if (!state.tasks) state.tasks = [];
         if (state.tasks.length < 5) {
-            state.tasks.push(focusInput.value.trim());
+            state.tasks.push({ text: focusInput.value.trim(), completed: false });
             focusInput.value = "";
             saveState();
         }
     }
 });
 
-function completeTask(index) {
-    state.tasks.splice(index, 1);
+function toggleTaskComplete(index) {
+    state.tasks[index].completed = !state.tasks[index].completed;
     saveState();
 }
 
@@ -272,23 +278,22 @@ function renderTasks() {
         const li = document.createElement('li');
         li.className = 'task-item';
         
-        const radio = document.createElement('input');
-        radio.type = 'radio';
-        radio.name = `task-${index}`;
-        radio.onclick = () => {
-            setTimeout(() => completeTask(index), 300); // 300ms delay for visual satisfaction
-        };
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.name = `task-${index}`;
+        checkbox.checked = task.completed;
+        checkbox.onchange = () => toggleTaskComplete(index);
         
         const span = document.createElement('span');
-        span.className = 'task-label';
-        span.textContent = task;
+        span.className = `task-label ${task.completed ? 'completed' : ''}`;
+        span.textContent = task.text || task;
         
         // Dynamic font size scaling (shrinks as items are added)
         const baseSize = 1.6;
         const size = baseSize - (state.tasks.length * 0.15);
         span.style.fontSize = `${Math.max(1, size)}rem`;
         
-        li.appendChild(radio);
+        li.appendChild(checkbox);
         li.appendChild(span);
         focusList.appendChild(li);
     });
