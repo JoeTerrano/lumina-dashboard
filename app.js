@@ -7,7 +7,8 @@ let state = {
         { name: 'AI', url: 'https://ai.google.dev/' },
         { name: 'Cloud', url: 'https://cloud.google.com/' },
         { name: 'Gemini', url: 'https://gemini.google.com/' }
-    ]
+    ],
+    tasks: []
 };
 
 // Load state from LocalStorage
@@ -15,6 +16,7 @@ function loadState() {
     const saved = localStorage.getItem('lumina_state');
     if (saved) {
         state = JSON.parse(saved);
+        if (!state.tasks) state.tasks = [];
         // Sync Modal UI
         document.getElementById('location-input').value = state.location.city;
         document.getElementById('temp-unit').value = state.units.temp;
@@ -26,15 +28,14 @@ function saveState() {
     localStorage.setItem('lumina_state', JSON.stringify(state));
     renderLinks();
     updateWeather();
+    renderTasks();
 }
 
 // --- UI Elements ---
 const clockElement = document.getElementById('clock');
 const greetingElement = document.getElementById('greeting');
 const focusInput = document.getElementById('focus-input');
-const focusDisplay = document.getElementById('focus-display');
-const focusText = document.getElementById('focus-text');
-const completeBtn = document.getElementById('complete-btn');
+const focusList = document.getElementById('focus-list');
 const inputContainer = document.getElementById('focus-input-container');
 const settingsToggle = document.getElementById('settings-toggle');
 const settingsModal = document.getElementById('settings-modal');
@@ -246,35 +247,65 @@ if (refreshBtn) {
     refreshBtn.addEventListener('click', fetchNewQuote);
 }
 
-// Focus Persistence (Existing Logic)
+// Task List Management
 focusInput.addEventListener('keypress', (e) => {
     if (e.key === 'Enter' && focusInput.value.trim() !== "") {
-        const task = focusInput.value.trim();
-        focusText.textContent = task;
-        inputContainer.classList.add('hidden');
-        focusDisplay.classList.remove('hidden');
-        localStorage.setItem('lumina_focus', task);
+        if (!state.tasks) state.tasks = [];
+        if (state.tasks.length < 5) {
+            state.tasks.push(focusInput.value.trim());
+            focusInput.value = "";
+            saveState();
+        }
     }
 });
 
-completeBtn.onclick = () => {
-    focusDisplay.classList.add('hidden');
-    inputContainer.classList.remove('hidden');
-    focusInput.value = "";
-    localStorage.removeItem('lumina_focus');
-};
+function completeTask(index) {
+    state.tasks.splice(index, 1);
+    saveState();
+}
+
+function renderTasks() {
+    if (!state.tasks) state.tasks = [];
+    focusList.innerHTML = '';
+    
+    state.tasks.forEach((task, index) => {
+        const li = document.createElement('li');
+        li.className = 'task-item';
+        
+        const radio = document.createElement('input');
+        radio.type = 'radio';
+        radio.name = `task-${index}`;
+        radio.onclick = () => {
+            setTimeout(() => completeTask(index), 300); // 300ms delay for visual satisfaction
+        };
+        
+        const span = document.createElement('span');
+        span.className = 'task-label';
+        span.textContent = task;
+        
+        // Dynamic font size scaling (shrinks as items are added)
+        const baseSize = 1.6;
+        const size = baseSize - (state.tasks.length * 0.15);
+        span.style.fontSize = `${Math.max(1, size)}rem`;
+        
+        li.appendChild(radio);
+        li.appendChild(span);
+        focusList.appendChild(li);
+    });
+    
+    // Hide input if we reach 5 tasks
+    if (state.tasks.length >= 5) {
+        inputContainer.classList.add('hidden');
+    } else {
+        inputContainer.classList.remove('hidden');
+    }
+}
 
 // --- Init ---
 loadState();
 updateTime();
 renderLinks();
 updateWeather();
+renderTasks(); // Render on startup
 fetchNewQuote();
 setInterval(updateTime, 1000);
-
-const savedFocus = localStorage.getItem('lumina_focus');
-if (savedFocus) {
-    focusText.textContent = savedFocus;
-    inputContainer.classList.add('hidden');
-    focusDisplay.classList.remove('hidden');
-}
