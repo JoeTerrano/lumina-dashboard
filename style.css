@@ -185,7 +185,7 @@ body {
     margin: 0;
     width: 20px;
     height: 20px;
-    border: 2px solid var(--text-light);
+    border: 2px solid rgba(255, 255, 255, 0.8);
     border-radius: 4px;
     outline: none;
     cursor: pointer;
