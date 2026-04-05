@@ -11,16 +11,62 @@
 </head>
 <body>
     <div class="background-overlay"></div>
+    
+    <button id="settings-toggle" class="settings-btn" aria-label="Settings">
+        <i data-lucide="settings"></i>
+    </button>
+
+    <div id="settings-modal" class="modal hidden">
+        <div class="modal-content glass-panel">
+            <header class="modal-header">
+                <h2>Settings</h2>
+                <button id="close-settings" class="close-btn">&times;</button>
+            </header>
+            
+            <section class="settings-section">
+                <h3>Location & Units</h3>
+                <div class="input-group">
+                    <label for="location-input">City Name</label>
+                    <input type="text" id="location-input" placeholder="e.g. New York">
+                </div>
+                <div class="toggle-group">
+                    <div class="toggle-item">
+                        <span>Temperature Unit</span>
+                        <select id="temp-unit">
+                            <option value="C">Celsius (°C)</option>
+                            <option value="F">Fahrenheit (°F)</option>
+                        </select>
+                    </div>
+                    <div class="toggle-item">
+                        <span>Time Format</span>
+                        <select id="time-format">
+                            <option value="24">24-Hour</option>
+                            <option value="12">12-Hour</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <section class="settings-section">
+                <h3>Launchpad Links (Max 8)</h3>
+                <div id="links-list" class="links-manager">
+                    <!-- Links will be added here dynamically -->
+                </div>
+                <div class="add-link-form">
+                    <input type="text" id="new-link-name" placeholder="Name (e.g. GitHub)">
+                    <input type="text" id="new-link-url" placeholder="URL (e.g. https://github.com)">
+                    <button id="add-link-btn" class="primary-btn">Add Link</button>
+                </div>
+            </section>
+        </div>
+    </div>
+
     <main class="dashboard">
         <header class="header">
             <h1 id="greeting">Good Morning</h1>
             <div id="clock" class="clock">00:00:00</div>
-            
-            <nav class="launchpad">
-                <a href="https://discuss.google.dev/" target="_blank" class="launch-button" title="Google Dev Discussion">Discuss</a>
-                <a href="https://ai.google.dev/" target="_blank" class="launch-button" title="Google AI">AI</a>
-                <a href="https://cloud.google.com/" target="_blank" class="launch-button" title="Google Cloud">Cloud</a>
-                <a href="https://gemini.google.com/" target="_blank" class="launch-button" title="Google Gemini">Gemini</a>
+            <nav id="launchpad" class="launchpad">
+                <!-- Initial links from earlier if needed, but we'll render dynamically -->
             </nav>
         </header>
 
@@ -53,6 +99,10 @@
         </div>
     </main>
 
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+      lucide.createIcons();
+    </script>
     <script src="app.js"></script>
 </body>
 </html>
