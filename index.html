@@ -12,9 +12,19 @@
 <body>
     <div class="background-overlay"></div>
     
-    <button id="settings-toggle" class="settings-btn" aria-label="Settings">
-        <i data-lucide="settings"></i>
-    </button>
+    <div class="top-bar">
+        <div class="top-weather-clock">
+            <div id="clock" class="clock">00:00:00</div>
+            <div class="weather-content mini">
+                <span id="temp">22°C</span>
+                <span id="condition">Partly Cloudy</span>
+                <span id="location-display">New York</span>
+            </div>
+        </div>
+        <button id="settings-toggle" class="settings-btn" aria-label="Settings">
+            <i data-lucide="settings"></i>
+        </button>
+    </div>
 
     <div id="settings-modal" class="modal hidden">
         <div class="modal-content glass-panel">
@@ -64,7 +74,6 @@
     <main class="dashboard">
         <header class="header">
             <h1 id="greeting">Good Morning</h1>
-            <div id="clock" class="clock">00:00:00</div>
             <nav id="launchpad" class="launchpad">
                 <!-- Initial links from earlier if needed, but we'll render dynamically -->
             </nav>
@@ -77,15 +86,6 @@
                     <ul id="focus-list" class="focus-list"></ul>
                     <div id="focus-input-container">
                         <input type="text" id="focus-input" placeholder="Enter a task (max 5)..." aria-label="Daily Goal">
-                    </div>
-                </div>
-
-                <div class="glass-panel weather-widget">
-                    <h3>Weather</h3>
-                    <div class="weather-content">
-                        <span id="location-display">New York</span>
-                        <span id="temp">22°C</span>
-                        <span id="condition">Partly Cloudy</span>
                     </div>
                 </div>
 
