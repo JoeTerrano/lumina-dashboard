@@ -107,6 +107,8 @@ async function updateLocation(city) {
 }
 
 // Launchpad Management
+let draggedItemIndex = null;
+
 function renderLinks() {
     launchpad.innerHTML = '';
     const listManager = document.getElementById('links-list');
@@ -125,10 +127,51 @@ function renderLinks() {
         if (listManager) {
             const div = document.createElement('div');
             div.className = "link-item";
-            div.innerHTML = `<span>${link.name}</span><button class="remove-link" onclick="removeLink(${index})">&times;</button>`;
+            div.draggable = true;
+            div.id = `link-${index}`;
+            div.dataset.index = index;
+
+            div.innerHTML = `
+                <div class="drag-handle"><i data-lucide="grip-vertical"></i></div>
+                <span>${link.name}</span>
+                <button class="remove-link" onclick="removeLink(${index})">&times;</button>
+            `;
+
+            // Drag Events
+            div.addEventListener('dragstart', (e) => {
+                draggedItemIndex = index;
+                div.classList.add('dragging');
+                e.dataTransfer.effectAllowed = 'move';
+            });
+
+            div.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'move';
+            });
+
+            div.addEventListener('drop', (e) => {
+                e.preventDefault();
+                const targetIndex = index;
+                if (draggedItemIndex !== null && draggedItemIndex !== targetIndex) {
+                    reorderLinks(draggedItemIndex, targetIndex);
+                }
+            });
+
+            div.addEventListener('dragend', () => {
+                div.classList.remove('dragging');
+                draggedItemIndex = null;
+            });
+
             listManager.appendChild(div);
         }
     });
+    if (window.lucide) window.lucide.createIcons();
+}
+
+function reorderLinks(fromIndex, toIndex) {
+    const item = state.links.splice(fromIndex, 1)[0];
+    state.links.splice(toIndex, 0, item);
+    saveState();
 }
 
 window.removeLink = (index) => {

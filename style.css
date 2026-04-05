@@ -370,6 +370,30 @@ cite {
     background: rgba(255, 255, 255, 0.1);
     padding: 0.5rem 1rem;
     border-radius: 8px;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.link-item.dragging {
+    opacity: 0.5;
+    background: rgba(255, 255, 255, 0.2);
+    border: 1px dashed var(--accent-color);
+}
+
+.drag-handle {
+    cursor: grab;
+    margin-right: 1rem;
+    color: rgba(255, 255, 255, 0.4);
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease;
+}
+
+.drag-handle:hover {
+    color: var(--accent-color);
+}
+
+.drag-handle:active {
+    cursor: grabbing;
 }
 
 .remove-link {
